@@ -12,7 +12,7 @@ Attribute VB_Exposed = False
 ' CLASS: clsJson
 ' DEVELOPER: Franz Hardinger
 ' HOMEPAGE / YOUTUBE: "Python dic list stile in vba"
-' GITHUB: [Your Repository Link Here]
+' GITHUB: https://github.com/FranzH85/pyVBA/tree/main/VBA_JsonParsing
 '
 ' ==============================================================================
 ' LICENSE: MIT License
