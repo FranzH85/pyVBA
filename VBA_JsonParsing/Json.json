@@ -1,0 +1,38 @@
+{
+  "foederation": "Vereinigte Foeoderation der Planeten",
+  "sternzeit_aktuell": 47634.4,
+  "alarm_stufe_rot": true,
+  "diplomatischer_status": null,
+  "flaggschiff": {
+    "name": "USS Enterprise",
+    "registrierung": "NCC-1701-D",
+    "klasse": "Galaxy-Klasse",
+    "status": "Aktiv",
+    "besatzung": 1014,
+    "antrieb": {
+      "typ": "Warp-Antrieb",
+      "kern": "M/AM-Reaktor (Materie/Antimaterie)",
+      "geschwindigkeit_max": 9.6,
+      "taktischer_status": "Online"
+    },
+    "fuehrung": {
+      "captain": "Jean-Luc Picard",
+      "erster_offizier": "William T. Riker",
+      "chefingenieur": "Geordi La Forge"
+    }
+  },
+  "aktive_flotte": [
+    {
+      "name": "USS Defiant",
+      "registrierung": "NX-74205",
+      "antrieb_typ": "Quanten-Warp",
+      "tarnvorrichtung": true
+    },
+    {
+      "name": "USS Voyager",
+      "registrierung": "NCC-74656",
+      "antrieb_typ": "Klassischer Warp",
+      "tarnvorrichtung": false
+    }
+  ]
+}
