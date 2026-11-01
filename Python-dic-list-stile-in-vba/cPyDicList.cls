@@ -10,28 +10,28 @@ Attribute VB_Exposed = False
 Option Explicit
 
 ' ==============================================================================
-' KLASSE: cPyDicList
-' ENTWICKLER: Franz Hardinger
-' LIZENZ: Frei verwendbar (MIT License)
+' CLASS: cPyDicList
+' DEVELOPER: Franz Hardinger
+' LICENSE: MIT License (Free to use)
 '
-' BESCHREIBUNG:
-' Ein extrem schneller und flexibler Daten-Container fuer VBA, der die elegante
-' Syntax von Python-Dictionaries direkt nach Excel bringt. Funktioniert komplett
-' ohne Installation auf Windows und Mac.
+' DESCRIPTION:
+' An extremely fast and flexible data container for VBA that brings the elegant
+' syntax of Python dictionaries directly into Excel. Works completely standalone
+' without requiring any installation on Windows and Mac.
 '
-' WICHTIGER HINWEIS FUER DIE PYTHON-SYNTAX:
-' Damit die Klammer-Kettung ohne ".Value" funktioniert, muss die Eigenschaft
-' "Property Get Value" das versteckte Attribut 'VB_UserMemId = 0' besitzen!
-' (Entweder die .cls-Datei importieren oder per Texteditor im Code hinterlegen)
+' IMPORTANT NOTE FOR PYTHON SYNTAX:
+' For bracket-chaining to work seamlessly without appending ".Value", the
+' "Property Get Value" property must have the hidden attribute 'VB_UserMemId = 0'!
+' (Either import the native .cls file or inject it via a text editor in the source code)
 '
 ' YOUTUBE VIDEO: "Python dic list stile in vba"
-' GITHUB: [Hier kommt dein Link hin]
+' GITHUB: [Insert your link here]
 '
-' REALE ANWENDUNG (Kompatibel von Excel 2007 bis 2026+):
+' REAL-WORLD USAGE (Compatible from Excel 2007 up to 2026+):
 '   Dim PyDicList As New cPyDicList
-'   PyDicList.Append "Schiff", New cPyDicList
+'   PyDicList.Append "Ship", New cPyDicList
 '   PyDicList.LastValue.Append "Name", "Enterprise"
-'   Debug.Print PyDicList("Schiff")("Name") ' Ausgabe: Enterprise
+'   Debug.Print PyDicList("Ship")("Name") ' Output: Enterprise
 ' ==============================================================================
 
 
@@ -42,7 +42,9 @@ Dim KeyArray() As String
 Dim ValueArray() As Variant
 Dim localImax As Long
 Public CaseSensitive As Boolean
-Public MyTyp As Variant
+Dim localTyp As Variant
+Dim localNewPyXMLSyndax As Boolean
+
  
 ' ==========================
 ' Initialisierung & Speicher
@@ -53,6 +55,38 @@ Private Sub Class_Initialize()
     ReDim ValueArray(0)
     CaseSensitive = True
 End Sub
+
+Public Property Get MyTyp() As Variant
+    If IsObject(localTyp) Then
+        Set MyTyp = localTyp
+    Else
+        MyTyp = localTyp
+    End If
+End Property
+ 
+Public Property Let MyTyp(Typ_ As Variant)
+    If IsObject(Typ_) Then
+        Set localTyp = Typ_
+    Else
+        localTyp = Typ_
+    End If
+End Property
+
+Public Property Set MyTyp(Typ_ As Variant)
+    If IsObject(Typ_) Then
+        Set localTyp = Typ_
+    Else
+        localTyp = Typ_
+    End If
+End Property
+
+Public Property Get NewPyXMLSyndax() As Boolean
+    NewPyXMLSyndax = localNewPyXMLSyndax
+End Property
+ 
+Public Property Let NewPyXMLSyndax(NewPyXMLSyndax_ As Boolean)
+    localNewPyXMLSyndax = NewPyXMLSyndax_
+End Property
  
 Sub ReDimValue()
     localImax = localImax + 1
@@ -76,7 +110,7 @@ End Sub
 ' Python-Style Key-Wert-Funktionen
 ' ==========================
 Function GetKeyIndex(Key_ As String) As Long
-    Dim i As Long
+    Dim I As Long
     Dim CompareMethod As Long
     
     If CaseSensitive Then
@@ -85,9 +119,9 @@ Function GetKeyIndex(Key_ As String) As Long
         CompareMethod = vbTextCompare
     End If
     
-    For i = 0 To localImax
-        If StrComp(KeyArray(i), Key_, CompareMethod) = 0 Then
-            GetKeyIndex = i
+    For I = 0 To localImax
+        If StrComp(KeyArray(I), Key_, CompareMethod) = 0 Then
+            GetKeyIndex = I
             Exit Function
         End If
     Next
@@ -104,19 +138,23 @@ Sub UpdateWithIndex(I_ As Long, NewKey_ As String, Value_ As Variant)
 End Sub
  
 Sub Update(Key_ As String, Value_ As Variant)
-    Dim i As Long
-    i = GetKeyIndex(Key_)
+    Dim I As Long
+    I = GetKeyIndex(Key_)
     
-    If i = -1 Then
+    If I = -1 Then
         ReDimValue
-        i = localImax
+        I = localImax
     End If
  
-    KeyArray(i) = Key_
+    KeyArray(I) = Key_
     If IsObject(Value_) Then
-        Set ValueArray(i) = Value_
+        Set ValueArray(I) = Value_
     Else
-        ValueArray(i) = Value_
+        If localNewPyXMLSyndax Then
+            ValueArray(I).Value = Value_
+        Else
+            ValueArray(I) = Value_
+        End If
     End If
 End Sub
  
@@ -131,13 +169,13 @@ Sub Append(Key_ As String, Value_ As Variant)
 End Sub
 
 Function GetDefault(Key_ As String, Default_ As Variant) As Variant
-    Dim i As Long
-    i = GetKeyIndex(Key_)
-    If i > -1 Then
-        If IsObject(ValueArray(i)) Then
-            Set GetDefault = ValueArray(i)
+    Dim I As Long
+    I = GetKeyIndex(Key_)
+    If I > -1 Then
+        If IsObject(ValueArray(I)) Then
+            Set GetDefault = ValueArray(I)
         Else
-            GetDefault = ValueArray(i)
+            GetDefault = ValueArray(I)
         End If
     Else
         If IsObject(Default_) Then
@@ -149,13 +187,13 @@ Function GetDefault(Key_ As String, Default_ As Variant) As Variant
 End Function
 
 Function Pop(Key_ As String) As Variant
-    Dim i As Long
-    i = GetKeyIndex(Key_)
-    If i > -1 Then
-        If IsObject(ValueArray(i)) Then
-            Set Pop = ValueArray(i)
+    Dim I As Long
+    I = GetKeyIndex(Key_)
+    If I > -1 Then
+        If IsObject(ValueArray(I)) Then
+            Set Pop = ValueArray(I)
         Else
-            Pop = ValueArray(i)
+            Pop = ValueArray(I)
         End If
         KeyDelete Key_
     Else
@@ -168,13 +206,13 @@ End Function
 ' ==========================
 Public Property Get Value(Key_ As String) As Variant
 Attribute Value.VB_UserMemId = 0
-    Dim i As Long
-    i = GetKeyIndex(Key_)
-    If i > -1 Then
-        If IsObject(ValueArray(i)) Then
-            Set Value = ValueArray(i)
+    Dim I As Long
+    I = GetKeyIndex(Key_)
+    If I > -1 Then
+        If IsObject(ValueArray(I)) Then
+            Set Value = ValueArray(I)
         Else
-            Value = ValueArray(i)
+            Value = ValueArray(I)
         End If
         Exit Property
     End If
@@ -183,19 +221,31 @@ End Property
  
 Public Property Let Value(Key_ As String, Value_ As Variant)
 Attribute Value.VB_UserMemId = 0
-    Dim i As Long
-    i = GetKeyIndex(Key_)
-    If i > -1 Then
-        ValueArray(i) = Value_
+    Dim I As Long
+    I = GetKeyIndex(Key_)
+    If I > -1 Then
+        If IsObject(Value_) Then
+            Set ValueArray(I) = Value_
+        Else
+            If localNewPyXMLSyndax Then
+                ValueArray(I).Value = Value_
+            Else
+                ValueArray(I) = Value_
+            End If
+        End If
     End If
 End Property
 
 Public Property Set Value(Key_ As String, Value_ As Variant)
 Attribute Value.VB_UserMemId = 0
-    Dim i As Long
-    i = GetKeyIndex(Key_)
-    If i > -1 Then
-        Set ValueArray(i) = Value_
+    Dim I As Long
+    I = GetKeyIndex(Key_)
+    If I > -1 Then
+        If IsObject(Value_) Then
+            Set ValueArray(I) = Value_
+        Else
+            ValueArray(I) = Value_
+        End If
     End If
 End Property
 
@@ -208,11 +258,23 @@ Public Property Get LastValue() As Variant
 End Property
  
 Public Property Let LastValue(Value_ As Variant)
-    ValueArray(localImax) = Value_
+    If IsObject(Value_) Then
+        Set ValueArray(localImax) = Value_
+    Else
+        If localNewPyXMLSyndax Then
+            ValueArray(localImax).Value = Value_
+        Else
+            ValueArray(localImax) = Value_
+        End If
+    End If
 End Property
 
 Public Property Set LastValue(Value_ As Variant)
-    Set ValueArray(localImax) = Value_
+    If IsObject(Value_) Then
+        Set ValueArray(localImax) = Value_
+    Else
+        ValueArray(localImax) = Value_
+    End If
 End Property
  
 Public Property Get ValueIndex(I_ As Long) As Variant
@@ -224,11 +286,23 @@ Public Property Get ValueIndex(I_ As Long) As Variant
 End Property
  
 Public Property Let ValueIndex(I_ As Long, Value_ As Variant)
-    ValueArray(I_) = Value_
+    If IsObject(Value_) Then
+        Set ValueArray(I_) = Value_
+    Else
+        If localNewPyXMLSyndax Then
+            ValueArray(I_).Value = Value_
+        Else
+            ValueArray(I_) = Value_
+        End If
+    End If
 End Property
 
 Public Property Set ValueIndex(I_ As Long, Value_ As Variant)
-    Set ValueArray(I_) = Value_
+    If IsObject(Value_) Then
+        Set ValueArray(I_) = Value_
+    Else
+        ValueArray(I_) = Value_
+    End If
 End Property
  
 Function Exists(Key_ As String) As Boolean
@@ -243,22 +317,22 @@ Function Exists(Key_ As String) As Boolean
 End Function
 
 Function ValueExists(Value_ As Variant) As Boolean
-    Dim i As Long
+    Dim I As Long
     Dim IsObjectValue As Boolean
     
     IsObjectValue = IsObject(Value_)
     
-    For i = 0 To localImax
+    For I = 0 To localImax
         If IsObjectValue Then
-            If IsObject(ValueArray(i)) Then
-                If ValueArray(i) Is Value_ Then
+            If IsObject(ValueArray(I)) Then
+                If ValueArray(I) Is Value_ Then
                     ValueExists = True
                     Exit Function
                 End If
             End If
         Else
-            If Not IsObject(ValueArray(i)) Then
-                If ValueArray(i) = Value_ Then
+            If Not IsObject(ValueArray(I)) Then
+                If ValueArray(I) = Value_ Then
                     ValueExists = True
                     Exit Function
                 End If
@@ -268,7 +342,7 @@ Function ValueExists(Value_ As Variant) As Boolean
 End Function
 
 Function FindIndicesByKey(ByVal Key_ As String) As cPyDicList
-    Dim i As Long
+    Dim I As Long
     Dim CompareMethod As Long
     Dim TempList As New cPyDicList
     
@@ -278,13 +352,64 @@ Function FindIndicesByKey(ByVal Key_ As String) As cPyDicList
         CompareMethod = vbTextCompare
     End If
     
-    For i = 0 To localImax
-        If StrComp(KeyArray(i), Key_, CompareMethod) = 0 Then
-            TempList.Append Key_, i
+    For I = 0 To localImax
+        If StrComp(KeyArray(I), Key_, CompareMethod) = 0 Then
+            TempList.Append Key_, I
         End If
-    Next i
+    Next I
     
     Set FindIndicesByKey = TempList
+End Function
+
+Function FindIndicesByValue(ByVal Value_ As String) As cPyDicList
+    Dim I As Long
+    Dim CompareMethod As Long
+    Dim TempList As New cPyDicList
+    
+    For I = 0 To localImax
+        If ValueArray(I) = Value_ Then
+            TempList.Append Key_, I
+        End If
+    Next I
+    
+    Set FindIndicesByKey = TempList
+End Function
+
+Function getListByKey(ByVal Key_ As String) As cPyDicList
+    Dim I As Long
+    Dim CompareMethod As Long
+    Dim TempList As New cPyDicList
+    Dim Imax As Long
+    Dim ITempList As Long
+    
+    If CaseSensitive Then
+        CompareMethod = vbBinaryCompare
+    Else
+        CompareMethod = vbTextCompare
+    End If
+    
+    Imax = -1
+    For I = 0 To localImax
+        If StrComp(KeyArray(I), Key_, CompareMethod) = 0 Then
+            Imax = Imax + 1
+        End If
+    Next I
+    
+    If Imax = -1 Then
+        Set getListByKey = TempList
+        Exit Function
+    End If
+    
+    TempList.SetNewMaxIndex Imax
+    
+    For I = 0 To localImax
+        If StrComp(KeyArray(I), Key_, CompareMethod) = 0 Then
+            TempList.UpdateWithIndex ITempList, KeyArray(I), ValueArray(I)
+            ITempList = ITempList + 1
+        End If
+    Next I
+    
+    Set getListByKey = TempList
 End Function
 
 Public Property Get Key(I_ As Long) As String
@@ -307,11 +432,11 @@ End Property
 ' Datenmanipulation & Debug
 ' ==========================
 Sub KeyDelete(Key_ As String)
-    Dim i As Long, j As Long
-    i = GetKeyIndex(Key_)
-    If i = -1 Then Exit Sub
+    Dim I As Long, j As Long
+    I = GetKeyIndex(Key_)
+    If I = -1 Then Exit Sub
     
-    For j = i To localImax - 1
+    For j = I To localImax - 1
         KeyArray(j) = KeyArray(j + 1)
         If IsObject(ValueArray(j + 1)) Then
             Set ValueArray(j) = ValueArray(j + 1)
@@ -331,8 +456,8 @@ Sub KeyDelete(Key_ As String)
 End Sub
  
 Sub DebugPrintAllKey()
-    Dim i As Long
-    For i = 0 To localImax
-        Debug.Print KeyArray(i)
+    Dim I As Long
+    For I = 0 To localImax
+        Debug.Print KeyArray(I)
     Next
 End Sub
