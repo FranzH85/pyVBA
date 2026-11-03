@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<invoice:Invoice xmlns:invoice="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+                 xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+                 xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+    
+    <!-- Rechnungsmetadaten -->
+    <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:xoev-de:kosit:standard:xrechnung_3.0</cbc:CustomizationID>
+    <cbc:ID>RE-2373-001</cbc:ID>
+    <cbc:IssueDate>2026-10-24</cbc:IssueDate>
+    <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+    <cbc:DocumentCurrencyCode>LTL</cbc:DocumentCurrencyCode> <!-- Latinum -->
+	
+    <!-- Kaufmännischen -->
+    <cbc:BuyerReference>SOVEREIGN-Refit</cbc:BuyerReference>
+    <cac:OrderReference>
+        <cbc:ID>369852-Starfleet</cbc:ID>
+        <cbc:SalesOrderID>O1727-Utopia</cbc:SalesOrderID>
+    </cac:OrderReference>
+	
+    <!-- Verkäufer (AccountingSupplierParty) -->
+    <cac:AccountingSupplierParty>
+        <cac:Party>
+            <cac:PartyName>
+                <cbc:Name>Franz Hardinger</cbc:Name>
+            </cac:PartyName>
+            <cac:PostalAddress>
+                <cbc:StreetName>Ares Vallis Sektor 4</cbc:StreetName>
+                <cbc:CityName>Mars</cbc:CityName>
+                <cbc:PostalZone>00001</cbc:PostalZone>
+                <cac:Country>
+                    <cbc:IdentificationCode>SOL</cbc:IdentificationCode>
+                </cac:Country>
+            </cac:PostalAddress>
+        </cac:Party>
+    </cac:AccountingSupplierParty>
+
+    <!-- Käufer (AccountingCustomerParty) -->
+    <cac:AccountingCustomerParty>
+        <cac:Party>
+			<cac:PartyIdentification>
+                <cbc:ID>1068</cbc:ID>
+            </cac:PartyIdentification>
+            <cac:PartyName>
+                <cbc:Name>Sternenflotten-Kommando</cbc:Name>
+            </cac:PartyName>
+            <cac:PostalAddress>
+                <cbc:StreetName>Hauptquartier, Presidio</cbc:StreetName>
+                <cbc:CityName>San Francisco, Erde</cbc:CityName>
+                <cbc:PostalZone>94129</cbc:PostalZone>
+                <cac:Country>
+                    <cbc:IdentificationCode>SOL</cbc:IdentificationCode>
+                </cac:Country>
+            </cac:PostalAddress>
+        </cac:Party>
+    </cac:AccountingCustomerParty>
+	
+	<!-- Lieferdaten / Leistungsdatum -->
+    <cac:Delivery>
+        <cbc:ActualDeliveryDate>2026-10-22</cbc:ActualDeliveryDate>
+    </cac:Delivery>
+
+    <!-- Steuern (TaxTotal) -->
+    <cac:TaxTotal>
+        <cbc:TaxAmount currencyID="LTL">950.00</cbc:TaxAmount>
+        <cac:TaxSubtotal>
+            <cbc:TaxableAmount currencyID="LTL">5000.00</cbc:TaxableAmount>
+            <cbc:TaxAmount currencyID="LTL">950.00</cbc:TaxAmount>
+            <cac:TaxCategory>
+                <cbc:ID>S</cbc:ID>
+                <cbc:Percent>19.00</cbc:Percent>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:TaxCategory>
+        </cac:TaxSubtotal>
+    </cac:TaxTotal>
+
+    <!-- Gesamtsummen (LegalMonetaryTotal) -->
+    <cac:LegalMonetaryTotal>
+        <cbc:LineExtensionAmount currencyID="LTL">5000.00</cbc:LineExtensionAmount>
+        <cbc:TaxExclusiveAmount currencyID="LTL">5000.00</cbc:TaxExclusiveAmount>
+        <cbc:TaxInclusiveAmount currencyID="LTL">5950.00</cbc:TaxInclusiveAmount>
+        <cbc:PayableAmount currencyID="LTL">5950.00</cbc:PayableAmount>
+    </cac:LegalMonetaryTotal>
+
+    <!-- Rechnungsposition 1: Warp-Antrieb -->
+    <cac:InvoiceLine>
+        <cbc:ID>1</cbc:ID>
+        <cbc:InvoicedQuantity unitCode="NAR">1</cbc:InvoicedQuantity>
+        <cbc:LineExtensionAmount currencyID="LTL">4500.00</cbc:LineExtensionAmount>
+        <cac:Item>
+			<cac:SellersItemIdentification>
+                <cbc:ID>W-1701-E99</cbc:ID>
+            </cac:SellersItemIdentification>
+            <cbc:Name>M/AM-Gesamtantriebssystem (Klasse 9)</cbc:Name>
+            <cbc:Description>Austausch des primären Warp-Kerns für Sovereign-Klasse (USS Enterprise-E). Inklusive Dilithium-Ausrichtung.</cbc:Description>
+            <cac:ClassifiedTaxCategory>
+                <cbc:ID>S</cbc:ID>
+                <cbc:Percent>19.00</cbc:Percent>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:ClassifiedTaxCategory>
+        </cac:Item>
+        <cac:Price>
+            <cbc:PriceAmount currencyID="LTL">4500.00</cbc:PriceAmount>
+        </cac:Price>
+    </cac:InvoiceLine>
+
+    <!-- Rechnungsposition 2: Arbeitszeit -->
+    <cac:InvoiceLine>
+        <cbc:ID>2</cbc:ID>
+        <cbc:InvoicedQuantity unitCode="HUR">250</cbc:InvoicedQuantity>
+        <cbc:LineExtensionAmount currencyID="LTL">500.00</cbc:LineExtensionAmount>
+        <cac:Item>
+			<cac:SellersItemIdentification>
+                <cbc:ID>A-EPS-250H</cbc:ID>
+            </cac:SellersItemIdentification>
+            <cbc:Name>Ingenieur-Arbeitsstunden</cbc:Name>
+            <cbc:Description>Strukturreparaturen am EPS-Leitungssystem und Kalibrierung der Eindämmungsfelder durch Werft-Drohnen.</cbc:Description>
+            <cac:ClassifiedTaxCategory>
+                <cbc:ID>S</cbc:ID>
+                <cbc:Percent>19.00</cbc:Percent>
+                <cac:TaxScheme>
+                    <cbc:ID>VAT</cbc:ID>
+                </cac:TaxScheme>
+            </cac:ClassifiedTaxCategory>
+        </cac:Item>
+        <cac:Price>
+            <cbc:PriceAmount currencyID="LTL">2.00</cbc:PriceAmount>
+        </cac:Price>
+    </cac:InvoiceLine>
+    
+</invoice:Invoice>
