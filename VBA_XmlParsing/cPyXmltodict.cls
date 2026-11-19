@@ -67,16 +67,16 @@ End Property
 
 
 Function ParseFile(FilePath_ As String) As Boolean
-    Dim xmlDoc As New MSXML2.DOMDocument60
+    Dim XmlDoc As New MSXML2.DOMDocument60
     
     Set XmlObjekt = New cPyDicList
     
-    xmlDoc.async = False
-    xmlDoc.validateOnParse = False
+    XmlDoc.async = False
+    XmlDoc.validateOnParse = False
     
-    If xmlDoc.Load(FilePath_) Then
+    If XmlDoc.Load(FilePath_) Then
         ParseFile = True
-        LocalParse XmlObjekt, xmlDoc.ChildNodes
+        LocalParse XmlObjekt, XmlDoc.ChildNodes
     Else
         MsgBox "Fehler beim Laden der XML!", vbCritical
         ParseFile = False
@@ -84,21 +84,21 @@ Function ParseFile(FilePath_ As String) As Boolean
 End Function
 
 Sub Parse(XmlText_ As String)
-    Dim xmlDoc As New MSXML2.DOMDocument60
+    Dim XmlDoc As New MSXML2.DOMDocument60
 
     Set XmlObjekt = New cPyDicList
     
-    xmlDoc.async = False
-    xmlDoc.validateOnParse = False
-    xmlDoc.LoadXML XmlText_
+    XmlDoc.async = False
+    XmlDoc.validateOnParse = False
+    XmlDoc.LoadXML XmlText_
     
     XmlObjekt.NewPyXMLSyndax = True
-    LocalParse XmlObjekt, xmlDoc.ChildNodes
+    LocalParse XmlObjekt, XmlDoc.ChildNodes
    
 End Sub
 
 Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As MSXML2.IXMLDOMNodeList)
-    Dim i As Long
+    Dim I As Long
     Dim Imax As Long
     Dim I2 As Long
     Dim I2max As Long
@@ -112,48 +112,48 @@ Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As MSXML2.IXMLD
 
     If Imax > -1 Then
         MaxICurrentContainer = -1
-        For i = 0 To Imax
-            If lcNodes_.Item(i).NodeType <> NODE_COMMENT Then
+        For I = 0 To Imax
+            If lcNodes_.Item(I).NodeType <> NODE_COMMENT Then
                 MaxICurrentContainer = MaxICurrentContainer + 1
             End If
-        Next i
+        Next I
         
         CurrentContainer_.SetNewMaxIndex MaxICurrentContainer
         
         I_CurrentContainer = -1
         
-        For i = 0 To Imax
+        For I = 0 To Imax
             I_CurrentContainer = I_CurrentContainer + 1
             
-            If lcNodes_.Item(i).NodeType = NODE_COMMENT Then
+            If lcNodes_.Item(I).NodeType = NODE_COMMENT Then
                 I_CurrentContainer = I_CurrentContainer - 1
                 GoTo NextI
             End If
             
-            If lcNodes_.Item(i).NodeType = NODE_TEXT Then
-                CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(i).nodeName, lcNodes_.Item(i).NodeValue
+            If lcNodes_.Item(I).NodeType = NODE_TEXT Then
+                CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(I).nodeName, lcNodes_.Item(I).NodeValue
             Else
             
-                If lcNodes_.Item(i).ChildNodes.Length > 0 Then
+                If lcNodes_.Item(I).ChildNodes.Length > 0 Then
                     IsChildrenList = True
                     
-                    If lcNodes_.Item(i).ChildNodes.Length = 1 Then
-                        If lcNodes_.Item(i).ChildNodes.Item(0).NodeType = NODE_TEXT Then
+                    If lcNodes_.Item(I).ChildNodes.Length = 1 Then
+                        If lcNodes_.Item(I).ChildNodes.Item(0).NodeType = NODE_TEXT Then
                             IsChildrenList = False
-                            CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(i).nodeName, New cPySimpleObject
-                            CurrentContainer_.ValueIndex(I_CurrentContainer) = lcNodes_.Item(i).ChildNodes.Item(0).nodeTypedValue
+                            CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(I).nodeName, New cPySimpleObject
+                            CurrentContainer_.ValueIndex(I_CurrentContainer) = lcNodes_.Item(I).ChildNodes.Item(0).nodeTypedValue
                         End If
                     End If
                     
                     If IsChildrenList Then
-                        CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(i).nodeName, New cPyDicList
-                        LocalParse CurrentContainer_.ValueIndex(I_CurrentContainer), lcNodes_.Item(i).ChildNodes
+                        CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(I).nodeName, New cPyDicList
+                        LocalParse CurrentContainer_.ValueIndex(I_CurrentContainer), lcNodes_.Item(I).ChildNodes
                     End If
                 Else
-                    CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(i).nodeName, New cPySimpleObject
+                    CurrentContainer_.UpdateWithIndex I_CurrentContainer, lcNodes_.Item(I).nodeName, New cPySimpleObject
                 End If
                 
-                I2max = lcNodes_.Item(i).Attributes.Length - 1
+                I2max = lcNodes_.Item(I).Attributes.Length - 1
                 
                 If I2max > -1 Then
                     CurrentContainer_.ValueIndex(I_CurrentContainer).MyTyp = New cPyDicList
@@ -161,36 +161,52 @@ Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As MSXML2.IXMLD
                     CurrentContainer_.ValueIndex(I_CurrentContainer).MyTyp.SetNewMaxIndex I2max
                     
                     For I2 = 0 To I2max
-                        CurrentContainer_.ValueIndex(I_CurrentContainer).MyTyp.UpdateWithIndex I2, lcNodes_.Item(i).Attributes.Item(I2).nodeName, lcNodes_.Item(i).Attributes.Item(I2).NodeValue
+                        CurrentContainer_.ValueIndex(I_CurrentContainer).MyTyp.UpdateWithIndex I2, lcNodes_.Item(I).Attributes.Item(I2).nodeName, lcNodes_.Item(I).Attributes.Item(I2).NodeValue
                     Next I2
                 End If
             End If
 
 NextI:
-        Next i
+        Next I
     End If
 
 End Sub
 
-Function toXml() As String
-    Dim xmlDoc As String
+Function CreateXmlNode(XmlString As String) As Variant
+    Dim XmlStruct As Variant
     
-    LocaltoXml xmlDoc
-    toXml = xmlDoc
+    If InStr(XmlString, "<") <> 0 Then
+        Set XmlStruct = New cPyXmltodict
+        XmlStruct.Parse XmlString
+        Set CreateXmlNode = XmlStruct.XmlObjekt
+    Else
+        Set XmlStruct = New cPySimpleObject
+        XmlStruct.Value = XmlString
+        Set CreateXmlNode = XmlStruct
+    End If
+    
+    
+End Function
+
+Function toXml() As String
+    Dim XmlDoc As String
+    
+    LocaltoXml XmlDoc
+    toXml = XmlDoc
 End Function
 
 Sub toXmlFile(FilePath_ As String)
-    Dim xmlDoc As String
+    Dim XmlDoc As String
     Dim File As Object
     Dim oStreamBinary As Object
 
-    LocaltoXml xmlDoc
+    LocaltoXml XmlDoc
 
     Set File = CreateObject("ADODB.Stream")
     File.Type = 2
     File.Charset = "UTF-8"
     File.Open
-    File.WriteText xmlDoc
+    File.WriteText XmlDoc
     
     Set oStreamBinary = CreateObject("ADODB.Stream")
     oStreamBinary.Type = 1
@@ -218,50 +234,50 @@ Private Sub LocaltoXml(xmlDoc_ As String)
 End Sub
 
 Private Sub LocaltoXmlNextElement(CurrentContainer_ As cPyDicList, Element_ As String, vbTabCount_ As Long)
-    Dim i  As Long
+    Dim I  As Long
     Dim vbTabString As String
     
-    For i = 1 To vbTabCount_
+    For I = 1 To vbTabCount_
         vbTabString = vbTabString & vbTab
-    Next i
+    Next I
     
-    For i = 0 To CurrentContainer_.Imax
-        If CurrentContainer_.Key(i) <> VBA_ElementDelete Then
-            If CurrentContainer_.Key(i) = VBA_TextMarker Then
-                Element_ = Element_ & CurrentContainer_.ValueIndex(i)
+    For I = 0 To CurrentContainer_.Imax
+        If CurrentContainer_.Key(I) <> VBA_ElementDelete Then
+            If CurrentContainer_.Key(I) = VBA_TextMarker Then
+                Element_ = Element_ & CurrentContainer_.ValueIndex(I)
                 GoTo NextI
             End If
             
-            If TypeOf CurrentContainer_.ValueIndex(i) Is cPyDicList Then
-                If CurrentContainer_.ValueIndex(i).Imax = -1 Then
-                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(i) & localWriteAttributes(CurrentContainer_.ValueIndex(i).MyTyp) & "/>" & Chr(13)
+            If TypeOf CurrentContainer_.ValueIndex(I) Is cPyDicList Then
+                If CurrentContainer_.ValueIndex(I).Imax = -1 Then
+                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(I) & localWriteAttributes(CurrentContainer_.ValueIndex(I).MyTyp) & "/>" & Chr(13)
                 Else
-                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(i) & localWriteAttributes(CurrentContainer_.ValueIndex(i).MyTyp) & ">" & Chr(13)
-                    LocaltoXmlNextElement CurrentContainer_.ValueIndex(i), Element_, vbTabCount_ + 1
-                    Element_ = Element_ & vbTabString & "</" & CurrentContainer_.Key(i) & ">" & Chr(13)
+                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(I) & localWriteAttributes(CurrentContainer_.ValueIndex(I).MyTyp) & ">" & Chr(13)
+                    LocaltoXmlNextElement CurrentContainer_.ValueIndex(I), Element_, vbTabCount_ + 1
+                    Element_ = Element_ & vbTabString & "</" & CurrentContainer_.Key(I) & ">" & Chr(13)
                 End If
             Else
-                If IsEmpty(CurrentContainer_.ValueIndex(i)) Then
-                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(i) & localWriteAttributes(CurrentContainer_.ValueIndex(i).MyTyp) & "/>" & Chr(13)
+                If IsEmpty(CurrentContainer_.ValueIndex(I)) Then
+                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(I) & localWriteAttributes(CurrentContainer_.ValueIndex(I).MyTyp) & "/>" & Chr(13)
                 Else
-                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(i) & localWriteAttributes(CurrentContainer_.ValueIndex(i).MyTyp) & ">" & CurrentContainer_.ValueIndex(i) & "</" & CurrentContainer_.Key(i) & ">" & Chr(13)
+                    Element_ = Element_ & vbTabString & "<" & CurrentContainer_.Key(I) & localWriteAttributes(CurrentContainer_.ValueIndex(I).MyTyp) & ">" & CurrentContainer_.ValueIndex(I) & "</" & CurrentContainer_.Key(I) & ">" & Chr(13)
                 End If
             End If
         End If
 NextI:
-    Next i
+    Next I
 
 End Sub
 
 Private Function localWriteAttributes(Attributes_ As Variant) As String
     Dim localStrng As String
-    Dim i As Long
+    Dim I As Long
     
     If Not IsEmpty(Attributes_) Then
         If IsObject(Attributes_) Then
-            For i = 0 To Attributes_.Imax
-                localStrng = localStrng & " " & Attributes_.Key(i) & "=""" & Attributes_.ValueIndex(i) & """"
-            Next i
+            For I = 0 To Attributes_.Imax
+                localStrng = localStrng & " " & Attributes_.Key(I) & "=""" & Attributes_.ValueIndex(I) & """"
+            Next I
         End If
     End If
     
@@ -270,27 +286,27 @@ End Function
 
 Sub DebugPrintKeyConst()
     Dim KeyNameList As New cPyDicList
-    Dim i As Long
+    Dim I As Long
     
     Debug.Print "Const VBA_ElementDelete As String = ""VBA_ElementDelete"""
     Debug.Print "Const VBA_TextMarker   As String = ""#text"""
     
     NextDebugPrintKeyConst XmlObjekt, KeyNameList
     
-    For i = 0 To KeyNameList.Imax
-        Debug.Print "Const xml_" & Replace(KeyNameList.Key(i), ":", "_") & " As String = """ & KeyNameList.Key(i) & """"
-    Next i
+    For I = 0 To KeyNameList.Imax
+        Debug.Print "Const xml_" & Replace(KeyNameList.Key(I), ":", "_") & " As String = """ & KeyNameList.Key(I) & """"
+    Next I
 End Sub
 
 Private Sub NextDebugPrintKeyConst(CurrentContainer_ As cPyDicList, KeyNameList_ As cPyDicList)
-    Dim i As Long
+    Dim I As Long
     
-    For i = 0 To CurrentContainer_.Imax
-        KeyNameList_.Update CurrentContainer_.Key(i), Empty
-        If TypeOf CurrentContainer_.ValueIndex(i) Is cPyDicList Then
-            NextDebugPrintKeyConst CurrentContainer_.ValueIndex(i), KeyNameList_
+    For I = 0 To CurrentContainer_.Imax
+        KeyNameList_.Update CurrentContainer_.Key(I), Empty
+        If TypeOf CurrentContainer_.ValueIndex(I) Is cPyDicList Then
+            NextDebugPrintKeyConst CurrentContainer_.ValueIndex(I), KeyNameList_
         End If
-    Next i
+    Next I
 End Sub
 
 

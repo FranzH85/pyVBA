@@ -2,7 +2,7 @@
 
 A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant syntax of Python dictionaries and dynamic XML parsing directly into Visual Basic for Applications (VBA).
 
-📺 **Watch the full tutorial on YouTube:** [VBA XML parsen wie in PYTHON! 🐍 (xmltodict für Excel & Word)](https://youtu.be/DABjl62x0bY)
+📺 **Watch the full tutorial on YouTube:** [VBA XML parsen wie in PYTHON! 🐍 (xmltodict für Excel & Word)](https://www.youtube.com/watch?v=DABjl62x0bY)
 
 **Inspired by Python's popular `xmltodict` library**, this framework allows you to work with XML files as if they were native hierarchical dictionaries. Unlike traditional, nested MSXML traversal methods or the native `Scripting.Dictionary`, **pyVBA** preserves element sequences, handles complex XML attributes dynamically, and allows intuitive bracket-chaining. It operates natively on both Windows and macOS without external library installations.
 
@@ -40,6 +40,39 @@ To enable fast native parsing, open the VBA Editor, navigate to **Tools** -> **R
 * **Microsoft XML, v6.0** (MSXML2)
 
 *(Note: The ADODB stream utilized for clean UTF-8 exporting is implemented via Late-Binding within the source code and does not require an explicit reference in the menu!)*
+
+---
+
+## 🧩 Dynamic Node Injection (`CreateXmlNode`)
+The framework features a powerful utility called `CreateXmlNode`. This function allows you to parse string fragments on-the-fly and inject them directly into your existing object tree as either nested structures or raw value containers—without needing to manually instantiate sub-classes.
+
+```vba
+Sub YouTube_Demo_CreateXmlNode()
+    Dim XmlString As String
+    Dim xml As New cPyXmltodict
+    
+    ' A dynamic XML string (e.g., freshly fetched from a web API)
+    XmlString = "<WarpAntrieb Typ='Klasse 9'><Status>Bereit</Status><Energie>100</Energie></WarpAntrieb>"
+    
+    ' Parse the base structure
+    xml.Parse XmlString
+    
+    ' Dynamically inject a complex XML sub-node structure
+    xml.XmlObjekt("WarpAntrieb").Append "Data", xml.CreateXmlNode("<maxWarp>9.999</maxWarp>")
+    
+    ' Dynamically inject a primitive text node container
+    xml.XmlObjekt("WarpAntrieb").Append "CurrentWarp", xml.CreateXmlNode("7")
+    
+    ' --- Elegant Python-Style Access ---
+    Debug.Print "Antriebs-Status: " & xml.XmlObjekt("WarpAntrieb")("Status")      ' Output: Bereit
+    Debug.Print "Energie-Level:  " & xml.XmlObjekt("WarpAntrieb")("Energie")     ' Output: 100
+    Debug.Print "maxWarp:        " & xml.XmlObjekt("WarpAntrieb")("Data")("maxWarp") ' Output: 9.999
+    Debug.Print "CurrentWarp:    " & xml.XmlObjekt("WarpAntrieb")("CurrentWarp") ' Output: 7
+    
+    ' Access attributes directly from metadata slots
+    Debug.Print "Spezifikation:  " & xml.XmlObjekt("WarpAntrieb").MyTyp("Typ")      ' Output: Klasse 9
+End Sub
+```
 
 ---
 
