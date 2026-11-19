@@ -1,6 +1,6 @@
-# pyVBA – Python-Style XML Parsing & Data Structures in Native VBA
+# pyVBA – Python-Style XML Parsing, Excel Tables & Data Structures in Native VBA
 
-A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant syntax of Python dictionaries, `xmltodict` parsing, and dynamic data manipulation directly into Visual Basic for Applications (VBA).
+A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant syntax of Python dictionaries, `xmltodict` parsing, `pandas`-style Excel table manipulation, and dynamic data structures directly into Visual Basic for Applications (VBA).
 
 ---
 
@@ -18,11 +18,12 @@ The component files located directly in the root directory are **universal** and
 ### 🔌 Application-Specific Extensions
 These subfolders contain specialized classes tailored strictly for the object models of their respective Microsoft Office host applications:
 * 📂 **`Word/`**: Contains `cPyWordTable.cls` and `cPyBookmark.cls` to map parsed XML/JSON data structures natively onto Word text grids and document bookmarks via inline markup.
-* 📂 **`Excel/`**: Contains tools, worksheet handlers, and data structures tailored exclusively for advanced Excel automation.
+* 📂 **`Excel/`**: Contains `cPyExcelTable.cls` as well as tools, worksheet handlers, and data structures tailored exclusively for high-speed Excel automation.
 * 📂 **`Access/`**: Contains engine extensions and database-handling classes designed explicitly for Microsoft Access.
 
 ### 🔬 Practical Examples & Showcases
 These directories contain implementation examples, test procedures, and specific showcase files featured in video tutorials:
+* 📂 **`pyExcelTable/`**: The Python Pandas-style Excel table showcase (`cPyExcelTable.cls`), demonstrating high-speed in-memory table processing (50,000 cells in ~1.18 seconds) and SAP XML-to-Excel workflows.
 * 📂 **`VBA_XmlParsing/`**: The complete parsing showcase (SAP IDoc files, XRechnung 3.0 e-invoices, and dynamic template rendering).
 * 📂 **`VBA_JsonParsing/`**: Comprehensive code samples and test cases for working with structured JSON data payloads.
 * 📂 **`Python-dic-list-stile-in-vba/`**: The benchmark test field showcasing performance scripts handling over 1,000,000 dictionary elements in under 0.5 seconds.
