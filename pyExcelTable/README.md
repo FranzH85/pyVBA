@@ -2,7 +2,7 @@
 
 A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant table syntax of **Python Pandas** directly into Excel VBA.
 
-📺 **Watch the full tutorial on YouTube:** [Excel VBA im PYTHON PANDAS-Style! 🐼 (10x schneller als normale Schleifen)](https://youtube.com)
+📺 **Watch the full tutorial on YouTube:** [Excel VBA im PYTHON PANDAS-Style! 🐼 (10x schneller als normale Schleifen)](https://www.youtube.com/watch?v=tUhp5EoQ-DY)
 
 **Inspired by Python's popular `pandas` library**, this class allows you to load entire Excel tables into memory (RAM) all at once, manipulate them using readable column names, and write them back in a single batch. Say goodbye to slow cell-by-cell loops – **cPyExcelTable** processes tens of thousands of cells in about one second and runs natively without external libraries.
 
