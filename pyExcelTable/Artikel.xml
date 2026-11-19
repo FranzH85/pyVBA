@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MATMAS05>
+    <IDOC BEGIN="1">
+        <EDI_DC40 SEGMENT="1">
+            <TABNAM>EDI_DC40</TABNAM>
+            <MANDT>100</MANDT>
+            <DOCNUM>0000000000237305</DOCNUM>
+            <IDOCTYP>MATMAS05</IDOCTYP>
+            <MESTYP>MATMAS</MESTYP>
+            <SNDPRN>LOG_HQ_SAN_FRANCISCO</SNDPRN>
+            <RCVPRN>FLEET_PRODUCTION</RCVPRN>
+        </EDI_DC40>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-001</MATNR>
+            <MATKL>ANTRIEB</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Dilithium-Matrix-Kristall Klasse 9</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-002</MATNR>
+            <MATKL>ANTRIEB</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Magnetischer Eindämmungsinjektor</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+                <E1MARDM SEGMENT="1"><LGORT>0002</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-003</MATNR>
+            <MATKL>ANTRIEB</MATKL>
+            <MEINS>MTR</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>EPS-Hauptleitung Typ-A Hochspannung</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0005</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-004</MATNR>
+            <MATKL>ANTRIEB</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Plasmastrom-Regelventil</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-005</MATNR>
+            <MATKL>STRUKTUR</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Duranium-Hüllenpanzer-Segment</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0010</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-006</MATNR>
+            <MATKL>STRUKTUR</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Tritanium-Verstärkungsstrebe</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0010</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-SOV-007</MATNR>
+            <MATKL>SCHUTZ</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Deflektor-Schild-Emittergitter</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M01</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>0002</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-201</MATNR>
+            <MATKL>EDV</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Isolinearer Datenchip (Optisch)</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-202</MATNR>
+            <MATKL>EDV</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Bio-Neurales Gel-Pack Submodul</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>02</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+                <E1MARDM SEGMENT="1"><LGORT>1002</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-203</MATNR>
+            <MATKL>EDV</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Subraum-Transceiver-Subprozessor</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-204</MATNR>
+            <MATKL>VERSORG</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Replikator-Materiekonverter</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1005</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-205</MATNR>
+            <MATKL>VERSORG</MATKL>
+            <MEINS>LTR</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Kühlmittel für Hauptcomputerkern</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1005</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-COM-206</MATNR>
+            <MATKL>SENSOR</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Laterales Sensor-Phased-Array</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M02</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>1010</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-301</MATNR>
+            <MATKL>TAKTIK</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Phaser-Emitter-Segment Typ-XII</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-302</MATNR>
+            <MATKL>TAKTIK</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Nadion-Partikel-Vorstrahlkammer</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3001</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-303</MATNR>
+            <MATKL>TAKTIK</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Quantentorpedo-Abschussrohr-Kopplung</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3002</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-304</MATNR>
+            <MATKL>TAKTIK</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Hüllen-Sicherungskondensator</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3005</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-305</MATNR>
+            <MATKL>SICHERH</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Typ-3-Phasengewehr (Handwaffe)</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3010</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-306</MATNR>
+            <MATKL>SICHERH</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Trikorder Standardausführung Typ-VII</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3010</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+        <E1MARAM SEGMENT="1">
+            <MATNR>ART-TAK-307</MATNR>
+            <MATKL>MEDIZIN</MATKL>
+            <MEINS>ST</MEINS>
+            <E1MAKTM SEGMENT="1"><MAKTX>Dermal-Regenerator Feldmedizin</MAKTX></E1MAKTM>
+            <E1MARCM SEGMENT="1">
+                <WERKS>M03</WERKS>
+                <PSTAT>G</PSTAT>
+                <MMSTA>01</MMSTA>
+                <E1MARDM SEGMENT="1"><LGORT>3020</LGORT><PSTAT>L</PSTAT></E1MARDM>
+            </E1MARCM>
+        </E1MARAM>
+    </IDOC>
+</MATMAS05>
