@@ -96,8 +96,13 @@ End Sub
  
 Sub SetNewMaxIndex(NewMaxIndex_ As Long)
     localImax = NewMaxIndex_
-    ReDim Preserve KeyArray(localImax)
-    ReDim Preserve ValueArray(localImax)
+    If NewMaxIndex_ = -1 Then
+        ReDim KeyArray(0)
+        ReDim ValueArray(0)
+    Else
+        ReDim Preserve KeyArray(localImax)
+        ReDim Preserve ValueArray(localImax)
+    End If
 End Sub
  
 Sub DeleteAll()
@@ -368,11 +373,11 @@ Function FindIndicesByValue(ByVal Value_ As String) As cPyDicList
     
     For I = 0 To localImax
         If ValueArray(I) = Value_ Then
-            TempList.Append Key_, I
+            TempList.Append I, Value_
         End If
     Next I
     
-    Set FindIndicesByKey = TempList
+    Set FindIndicesByValue = TempList
 End Function
 
 Function getListByKey(ByVal Key_ As String) As cPyDicList
