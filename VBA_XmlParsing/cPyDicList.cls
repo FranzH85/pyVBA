@@ -370,10 +370,12 @@ Function FindIndicesByValue(ByVal Value_ As String) As cPyDicList
     Dim I As Long
     Dim CompareMethod As Long
     Dim TempList As New cPyDicList
+    Dim IString As String
     
     For I = 0 To localImax
         If ValueArray(I) = Value_ Then
-            TempList.Append I, Value_
+            IString = I
+            TempList.Append IString, Value_
         End If
     Next I
     
