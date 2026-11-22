@@ -15,9 +15,8 @@ Attribute VB_Exposed = False
 ' GITHUB: https://github.com
 '
 ' REQUIREMENTS (WINDOWS ONLY):
-' This module requires the native Windows XML library for maximum performance.
-' In the VBA Editor, go to Tools -> References and enable:
-' "Microsoft XML, v6.0" (MSXML2)
+' Uses Late Binding for MSXML2.DOMDocument.6.0 and ADODB.Stream.
+' No manual VBA References (Tools -> References) required!
 ' ==============================================================================
 ' LICENSE: MIT License
 '
@@ -48,12 +47,14 @@ Attribute VB_Exposed = False
 ' dictionary syntax with strict element sequence preservation.
 ' ==============================================================================
 
-
-
 Option Explicit
 
 Private Const VBA_ElementDelete As String = "VBA_ElementDelete"
 Private Const VBA_TextMarker   As String = "#text"
+
+' Native MSXML NodeType constants for Late Binding
+Private Const NODE_TEXT As Long = 3
+Private Const NODE_COMMENT As Long = 8
 
 Public XmlObjekt As cPyDicList
 
@@ -65,9 +66,9 @@ Public Property Get setTextMarkerString() As String
     setTextMarkerString = VBA_TextMarker
 End Property
 
-
 Function ParseFile(FilePath_ As String) As Boolean
-    Dim XmlDoc As New MSXML2.DOMDocument60
+    Dim XmlDoc As Object
+    Set XmlDoc = CreateObject("MSXML2.DOMDocument.6.0")
     
     Set XmlObjekt = New cPyDicList
     
@@ -84,7 +85,8 @@ Function ParseFile(FilePath_ As String) As Boolean
 End Function
 
 Sub Parse(XmlText_ As String)
-    Dim XmlDoc As New MSXML2.DOMDocument60
+    Dim XmlDoc As Object
+    Set XmlDoc = CreateObject("MSXML2.DOMDocument.6.0")
 
     Set XmlObjekt = New cPyDicList
     
@@ -94,10 +96,9 @@ Sub Parse(XmlText_ As String)
     
     XmlObjekt.NewPyXMLSyndax = True
     LocalParse XmlObjekt, XmlDoc.ChildNodes
-   
 End Sub
 
-Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As MSXML2.IXMLDOMNodeList)
+Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As Object)
     Dim I As Long
     Dim Imax As Long
     Dim I2 As Long
@@ -169,7 +170,6 @@ Private Sub LocalParse(CurrentContainer_ As cPyDicList, lcNodes_ As MSXML2.IXMLD
 NextI:
         Next I
     End If
-
 End Sub
 
 Function CreateXmlNode(XmlString As String) As Variant
@@ -184,8 +184,6 @@ Function CreateXmlNode(XmlString As String) As Variant
         XmlStruct.Value = XmlString
         Set CreateXmlNode = XmlStruct
     End If
-    
-    
 End Function
 
 Function toXml() As String
@@ -223,14 +221,12 @@ Sub toXmlFile(FilePath_ As String)
 End Sub
 
 Private Sub LocaltoXml(xmlDoc_ As String)
-    
     If XmlObjekt.Key(0) = "XML" Or XmlObjekt.Key(0) = "xml" Then
         xmlDoc_ = "<?xml" & localWriteAttributes(XmlObjekt.ValueIndex(0).MyTyp) & "?>" & Chr(13)
         XmlObjekt.Key(0) = VBA_ElementDelete
     End If
     
     LocaltoXmlNextElement XmlObjekt, xmlDoc_, 0
-    
 End Sub
 
 Private Sub LocaltoXmlNextElement(CurrentContainer_ As cPyDicList, Element_ As String, vbTabCount_ As Long)
@@ -266,7 +262,6 @@ Private Sub LocaltoXmlNextElement(CurrentContainer_ As cPyDicList, Element_ As S
         End If
 NextI:
     Next I
-
 End Sub
 
 Private Function localWriteAttributes(Attributes_ As Variant) As String
@@ -308,5 +303,3 @@ Private Sub NextDebugPrintKeyConst(CurrentContainer_ As cPyDicList, KeyNameList_
         End If
     Next I
 End Sub
-
-

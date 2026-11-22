@@ -35,13 +35,9 @@ To achieve true Python bracket-chaining without appending `.Value` explicitly on
 2. In the VBA Editor (`Alt + F11`), go to **File** -> **Import File...** (`Ctrl + M`).
 3. Import `cPyDicList.cls`, `cPyXmltodict.cls`, and `cPySimpleObject.cls`.
 
-### Environment Reference (Windows Only)
-To enable fast native parsing, open the VBA Editor, navigate to **Tools** -> **References**, and check:
-* **Microsoft XML, v6.0** (MSXML2)
+### Zero-Reference Plug & Play (Windows Only)
+Both the native XML parser (`MSXML2.DOMDocument.6.0`) and the clean UTF-8 exporter (`ADODB.Stream`) are implemented via **Late-Binding** within the source code. **No manual references** need to be enabled under **Tools** -> **References**—everything works right out of the box after importing the `.cls` files!
 
-*(Note: The ADODB stream utilized for clean UTF-8 exporting is implemented via Late-Binding within the source code and does not require an explicit reference in the menu!)*
-
----
 
 ## 🧩 Dynamic Node Injection (`CreateXmlNode`)
 The framework features a powerful utility called `CreateXmlNode`. This function allows you to parse string fragments on-the-fly and inject them directly into your existing object tree as either nested structures or raw value containers—without needing to manually instantiate sub-classes.
