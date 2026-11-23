@@ -2,7 +2,7 @@
 
 A lightweight, zero-dependency VBA utility that automatically exports and imports all VBA modules, classes, and UserForms (`.bas`, `.cls`, `.frm`) between Office files (**Excel, Word & Access**) and clean plain-text folders for **Git** or **SVN** version control.
 
-📺 **Watch the full tutorial on YouTube:** [VBA Code sauber mit Git & SVN versionieren! 🚀 (Automatischer Import & Export)](https://www.youtube.com/watch?v=x08LZku653Y) *(Video link coming soon)*
+📺 **Watch the full tutorial on YouTube:** [VBA Code sauber mit Git & SVN versionieren! 🚀 (Automatischer Import & Export)](https://www.youtube.com/watch?v=x08LZku653Y)
 
 **Binary Office files (`.xlsm`, `.docm`, `.accdb`) are a nightmare for version control** – no readable diffs, no clean merge history, and constant binary conflicts. **`cVBA_ImportExport`** solves this with a single call: it extracts your entire VBA project into readable text files and syncs external changes right back into your open Office host without losing hidden attributes or worksheet bindings.
 
