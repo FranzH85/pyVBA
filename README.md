@@ -1,6 +1,6 @@
 # pyVBA – Python-Style XML Parsing, Excel Tables & Data Structures in Native VBA
 
-A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant syntax of Python dictionaries, `xmltodict` parsing, `pandas`-style Excel table manipulation, and dynamic data structures directly into Visual Basic for Applications (VBA).
+A lightweight, blazing-fast, and zero-dependency VBA framework that brings the elegant syntax of Python dictionaries, `xmltodict` parsing, `pandas`-style Excel table manipulation, automated Git/SVN source code syncing, and dynamic data structures directly into Visual Basic for Applications (VBA).
 
 ---
 
@@ -14,6 +14,7 @@ The component files located directly in the root directory are **universal** and
 * **`cPyXmltodict.cls`**: The highly optimized XML parsing engine replicating the exact behavior of Python's `xmltodict` library using native OS document object models.
 * **`cPySimpleObject.cls`**: A universal variant vessel utilizing a default member ID pointer (`VB_UserMemId = 0`) to handle primitive data and complex references uniformly.
 * **`clsJson.cls`**: The universal core JSON processing module.
+* **`cVBA_ImportExport.cls`**: Automated source code exporter and hybrid importer (`.bas`, `.cls`, `.frm`) for clean Git and SVN version control across Excel, Word, and Access – including zero-config Windows folder shortcut (`src.lnk`) and OneDrive support.
 
 ### 🔌 Application-Specific Extensions
 These subfolders contain specialized classes tailored strictly for the object models of their respective Microsoft Office host applications:
@@ -23,6 +24,7 @@ These subfolders contain specialized classes tailored strictly for the object mo
 
 ### 🔬 Practical Examples & Showcases
 These directories contain implementation examples, test procedures, and specific showcase files featured in video tutorials:
+* 📂 **`SVN_GIT_Export/`**: Automated VBA source code synchronization showcase (`cVBA_ImportExport.cls` & `Develop.bas`), demonstrating how to extract and re-import Office VBA projects into plain-text Git or SVN repositories while preserving hidden attributes (`VB_UserMemId = 0`).
 * 📂 **`pyExcelTable/`**: The Python Pandas-style Excel table showcase (`cPyExcelTable.cls`), demonstrating high-speed in-memory table processing (50,000 cells in ~1.18 seconds) and SAP XML-to-Excel workflows.
 * 📂 **`VBA_XmlParsing/`**: The complete parsing showcase (SAP IDoc files, XRechnung 3.0 e-invoices, and dynamic template rendering).
 * 📂 **`VBA_JsonParsing/`**: Comprehensive code samples and test cases for working with structured JSON data payloads.
@@ -40,8 +42,8 @@ To achieve true Python bracket-chaining without appending `.Value` explicitly on
 3. Go to **File** -> **Import File...** (`Ctrl + M`) and import the required core files directly.
 
 ### Environment Reference (Windows Only)
-To enable native high-performance XML parsing, open the VBA Editor, navigate to **Tools** -> **References**, and check:
-* **Microsoft XML, v6.0** (MSXML2)
+* **For `cPyXmltodict.cls`:** To enable native high-performance XML parsing, open the VBA Editor, navigate to **Tools** -> **References**, and check **Microsoft XML, v6.0** (MSXML2).
+* **For `cVBA_ImportExport.cls`:** No VBA References are required (uses Late Binding), but you must enable **"Trust access to the VBA project object model"** once under **File** -> **Options** -> **Trust Center** -> **Trust Center Settings** -> **Macro Settings**.
 
 *(Note: The ADODB binary stream engine utilized for clean UTF-8 file exporting uses Late-Binding within the source code and does not require an explicit library reference in the menu!)*
 
