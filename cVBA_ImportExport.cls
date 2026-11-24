@@ -250,13 +250,16 @@ Private Sub ReplaceModuleCode(ByVal TargetComponent As Object, ByVal FilePath As
 End Sub
 
 Private Function GetFullName() As String
+    Dim ApplicationObject As Object
+    
     Select Case Application.Name
         Case "Microsoft Excel"
             GetFullName = CallByName(Application, "ThisWorkbook", VbGet).FullName
         Case "Microsoft Word"
             GetFullName = CallByName(Application, "ActiveDocument", VbGet).FullName
         Case "Microsoft Access"
-            GetFullName = CallByName(Application, "CurrentDb", VbGet).Name
+            Set ApplicationObject = CallByName(Application, "CurrentDb", VbMethod)
+            GetFullName = ApplicationObject.Name
     End Select
 End Function
 
