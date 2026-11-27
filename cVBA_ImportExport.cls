@@ -183,6 +183,9 @@ Public Sub Import()
                                 ReplaceModuleCode CurrentComponent, FilePath
                             Else
                                 ' Remove Class or UserForm so it can be cleanly re-imported in Pass 2
+                                If Application.Name = "Microsoft Access" Then
+                                    CallByName Application.DoCmd, "Rename", VbMethod, CurrentComponent.Name & "OLD", 5, CurrentComponent.Name
+                                End If
                                 CurrentVBComponents.Remove CurrentComponent
                                 FileCount = FileCount + 1
                                 ReDim Preserve FilesToImport(1 To FileCount)
