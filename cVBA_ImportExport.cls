@@ -68,7 +68,7 @@ Private Const vbext_ct_Document As Long = 100
 
 Private ScrDirPath As String
 
-Public Sub Export()
+Sub Export(Optional ExportQueries_ As Boolean = True)
     ' Exports all VBA components with more than 2 lines of code from the active host project
     ' into the resolved "src" directory using their native file extensions (.bas, .cls, .frm).
     Dim FullName As String
@@ -86,7 +86,11 @@ Public Sub Export()
     setScrDir
     If ScrDirPath = "" Then Exit Sub
     
-    Debug.Print ScrDirPath
+    If Application.Name = "Microsoft Access" Then
+        If ExportQueries_ Then
+            ExportQueries
+        End If
+    End If
     
     ' Locate the VBProject matching the current host file path
     For I = 1 To Application.VBE.VBProjects.Count
@@ -122,7 +126,7 @@ Public Sub Export()
     Next I
 End Sub
 
-Public Sub Import()
+Sub Import(Optional ImportQueries_ As Boolean = True)
     ' Imports all .bas, .cls, and .frm files from the "src" directory into the active host project.
     ' Hybrid approach:
     ' - Existing Standard (.bas) and Document modules get their code replaced in-place.
@@ -140,6 +144,7 @@ Public Sub Import()
     Dim FilesToImport() As String
     Dim FileCount As Long
     Dim ComponentExists As Boolean
+    Dim MyApplication As Object
     
     If Not HasVBAAccess() Then Exit Sub
     
@@ -147,6 +152,14 @@ Public Sub Import()
     
     setScrDir
     If ScrDirPath = "" Then Exit Sub
+    
+    Set MyApplication = Application
+    
+    If Application.Name = "Microsoft Access" Then
+        If ImportQueries_ Then
+            ImportQueries
+        End If
+    End If
     
     ' Locate the VBProject matching the current host file path
     For I = 1 To Application.VBE.VBProjects.Count
@@ -184,7 +197,7 @@ Public Sub Import()
                             Else
                                 ' Remove Class or UserForm so it can be cleanly re-imported in Pass 2
                                 If Application.Name = "Microsoft Access" Then
-                                    CallByName Application.DoCmd, "Rename", VbMethod, CurrentComponent.Name & "OLD", 5, CurrentComponent.Name
+                                    MyApplication.DoCmd.Rename CurrentComponent.Name & "OLD", 5, CurrentComponent.Name
                                 End If
                                 CurrentVBComponents.Remove CurrentComponent
                                 FileCount = FileCount + 1
@@ -253,16 +266,17 @@ Private Sub ReplaceModuleCode(ByVal TargetComponent As Object, ByVal FilePath As
 End Sub
 
 Private Function GetFullName() As String
-    Dim ApplicationObject As Object
+    Dim MyApplication As Object
     
-    Select Case Application.Name
+    Set MyApplication = Application
+    
+    Select Case MyApplication.Name
         Case "Microsoft Excel"
-            GetFullName = CallByName(Application, "ThisWorkbook", VbGet).FullName
+            GetFullName = MyApplication.ThisWorkbook.FullName
         Case "Microsoft Word"
-            GetFullName = CallByName(Application, "ActiveDocument", VbGet).FullName
+            GetFullName = MyApplication.ActiveDocument.FullName
         Case "Microsoft Access"
-            Set ApplicationObject = CallByName(Application, "CurrentDb", VbMethod)
-            GetFullName = ApplicationObject.Name
+            GetFullName = MyApplication.CurrentDb.Name
     End Select
 End Function
 
@@ -281,7 +295,7 @@ ErrHandler:
     HasVBAAccess = False
 End Function
 
-Public Sub setScrDir()
+Sub setScrDir()
     ' Resolves and sets the target "src" directory path for VBA code export.
     ' Supports local drives, OneDrive-synced files, and Windows folder shortcuts (src.lnk).
     ' Creates a local "src" directory if neither a valid folder nor a shortcut exists.
@@ -341,3 +355,98 @@ Public Sub setScrDir()
         ScrDirPath = targetDir
     End If
 End Sub
+
+Private Sub ExportQueries()
+    ' Exports all saved Access queries as clean .sql files into "src\Queries".
+    Dim db As Object
+    Dim qdf As Object
+    Dim FileNum As Integer
+    Dim QueryDir As String
+    Dim ExportPath As String
+    Dim MyApplication As Object
+    
+    If Application.Name <> "Microsoft Access" Then Exit Sub
+    Set MyApplication = Application
+    
+    setScrDir
+    If ScrDirPath = "" Then Exit Sub
+    
+    QueryDir = ScrDirPath & "\Queries"
+    If Dir(QueryDir & "\", vbDirectory) = "" Then MkDir QueryDir
+    
+    Set db = MyApplication.CurrentDb
+    
+    For Each qdf In db.QueryDefs
+        ' Skip internal Access temporary/system queries (starting with "~" or "MSys")
+        If Left(qdf.Name, 1) <> "~" And Left(qdf.Name, 4) <> "MSys" Then
+            ExportPath = QueryDir & "\" & qdf.Name & ".sql"
+            FileNum = FreeFile
+            Open ExportPath For Output As #FileNum
+            Print #FileNum, qdf.SQL;
+            Close #FileNum
+        End If
+    Next qdf
+End Sub
+
+Private Sub ImportQueries()
+    ' Imports all .sql files from "src\Queries" into Access as saved queries (QueryDefs).
+    Dim db As Object
+    Dim qdf As Object
+    Dim QueryDir As String
+    Dim FileName As String
+    Dim QueryName As String
+    Dim FilePath As String
+    Dim FileNum As Integer
+    Dim SqlCode As String
+    Dim QueryExists As Boolean
+    Dim MyApplication As Object
+    
+    If Application.Name <> "Microsoft Access" Then Exit Sub
+    Set MyApplication = Application
+    
+    setScrDir
+    If ScrDirPath = "" Then Exit Sub
+    
+    QueryDir = ScrDirPath & "\Queries"
+    If Dir(QueryDir & "\", vbDirectory) = "" Then Exit Sub
+    
+    Set db = MyApplication.CurrentDb
+    
+    FileName = Dir(QueryDir & "\*.sql")
+    Do While FileName <> ""
+        QueryName = Left(FileName, InStrRev(FileName, ".") - 1)
+        FilePath = QueryDir & "\" & FileName
+        
+        ' Read SQL content from file
+        FileNum = FreeFile
+        Open FilePath For Input As #FileNum
+        If LOF(FileNum) > 0 Then
+            SqlCode = Input$(LOF(FileNum), FileNum)
+        Else
+            SqlCode = ""
+        End If
+        Close #FileNum
+        
+        If Trim(SqlCode) <> "" Then
+            QueryExists = False
+            For Each qdf In db.QueryDefs
+                If LCase(qdf.Name) = LCase(QueryName) Then
+                    QueryExists = True
+                    Exit For
+                End If
+            Next qdf
+            
+            If QueryExists Then
+                qdf.SQL = SqlCode
+            Else
+                db.CreateQueryDef QueryName, SqlCode
+            End If
+        End If
+        
+        FileName = Dir()
+    Loop
+    
+    db.QueryDefs.Refresh
+    MyApplication.RefreshDatabaseWindow
+End Sub
+
