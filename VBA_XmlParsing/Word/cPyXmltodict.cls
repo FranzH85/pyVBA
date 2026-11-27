@@ -11,8 +11,8 @@ Attribute VB_Exposed = False
 ' ==============================================================================
 ' CLASS: cPyXmltodict
 ' DEVELOPER: Franz Hardinger
-' HOMEPAGE / YOUTUBE: "Python dic list stile in vba"
-' GITHUB: https://github.com
+' HOMEPAGE / YOUTUBE: https://www.youtube.com/watch?v=DABjl62x0bY
+' GITHUB: https://github.com/FranzH85/pyVBA/tree/main/VBA_XmlParsing
 '
 ' REQUIREMENTS (WINDOWS ONLY):
 ' Uses Late Binding for MSXML2.DOMDocument.6.0 and ADODB.Stream.
